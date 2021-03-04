@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProdukController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\SliderController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/produk/{id}', [ProdukController::class, 'show']);
 Route::get('/produk', [ProdukController::class, 'index']);
+Route::get('/slider', [SliderController::class, 'index']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
