@@ -18,6 +18,9 @@ use App\Http\Controllers\SliderController;
 Route::get('/produk/{id}', [ProdukController::class, 'show']);
 Route::get('/produk', [ProdukController::class, 'index']);
 Route::get('/slider', [SliderController::class, 'index']);
+Route::get('/setting', function () {
+    return DB::table('settings')->get();
+});
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

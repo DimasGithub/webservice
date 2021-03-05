@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produkdata;
 use Illuminate\Http\Request;
+use TCG\Voyager\Voyager;
 
 class ProdukController extends Controller
 {
