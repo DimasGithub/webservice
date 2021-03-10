@@ -41,12 +41,20 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
+        // $this->validate($request, [
         //     'namaproduk' => 'required',
         //     'deskripsi' => 'required',
         //     'gambar' => 'required',
         //     'harga' => 'required',
         // ]);
+        // $data = Produkdata::create([
+        //     'namaproduk' => $request->namaproduk,
+        //     'deskripsi' => $request->deskripsi,
+        //     'gambar' => $request->gambar,
+        //     'harga' => $request->harga,
+        // ]);
+        // return response()->json($data);
+
         // $data = new Produkdata;
         // $data->namaproduk = $request->namaproduk;
         // $data->deskripsi = $request->deskripsi;
@@ -54,6 +62,8 @@ class ProdukController extends Controller
         // $data->harga = $request->harga;
         // $data->save();
         // return;
+
+
         $validator = Validator::make($request->all(), [
             'namaproduk' => 'required',
             'deskripsi' => 'required',
@@ -108,7 +118,14 @@ class ProdukController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = Produkdata::findOrFail($id);
+        $data->namaproduk = $request->namaproduk;
+        $data->deskripsi = $request->deskripsi;
+        $data->gambar = $request->gambar;
+        $data->harga = $request->harga;
+        $data->save();
+
+        return response()->json($data);
     }
 
     /**
@@ -119,6 +136,8 @@ class ProdukController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Produkdata::findOrFail($id);
+        $data->delete();
+        return response()->json($data);
     }
 }

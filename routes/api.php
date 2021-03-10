@@ -17,6 +17,8 @@ use App\Http\Controllers\SliderController;
 
 Route::get('/produk/{id}', [ProdukController::class, 'show']);
 Route::post('/produk/create/', [ProdukController::class, 'store']);
+Route::put('produk/update/{id}', [ProdukController::class, 'update']);
+Route::delete('produk/delete/{id}', [ProdukController::class, 'destroy']);
 Route::get('/produk', [ProdukController::class, 'index']);
 Route::get('/slider', [SliderController::class, 'index']);
 Route::get('/setting', function () {
