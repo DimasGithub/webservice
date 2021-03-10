@@ -16,6 +16,7 @@ use App\Http\Controllers\SliderController;
 */
 
 Route::get('/produk/{id}', [ProdukController::class, 'show']);
+Route::post('/produk/create/', [ProdukController::class, 'store']);
 Route::get('/produk', [ProdukController::class, 'index']);
 Route::get('/slider', [SliderController::class, 'index']);
 Route::get('/setting', function () {

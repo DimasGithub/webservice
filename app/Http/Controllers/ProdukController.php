@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produkdata;
+use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use TCG\Voyager\Voyager;
 
 class ProdukController extends Controller
@@ -39,9 +41,39 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $validated = $request->validate([
+        //     'namaproduk' => 'required',
+        //     'deskripsi' => 'required',
+        //     'gambar' => 'required',
+        //     'harga' => 'required',
+        // ]);
+        // $data = new Produkdata;
+        // $data->namaproduk = $request->namaproduk;
+        // $data->deskripsi = $request->deskripsi;
+        // $data->gambar = $request->gambar;
+        // $data->harga = $request->harga;
+        // $data->save();
+        // return;
+        $validator = Validator::make($request->all(), [
+            'namaproduk' => 'required',
+            'deskripsi' => 'required',
+            'gambar' => 'required',
+            'harga' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(
+                $validator->errors(),
+            );
+        }
+        try {
+            $data = Produkdata::create($request->all());
+            return response()->json($data);
+        } catch (QueryException $e) {
+            return response()->json([
+                'PESAN' => "GAGAL" . $e->errorInfo
+            ]);
+        }
     }
-
     /**
      * Display the specified resource.
      *
