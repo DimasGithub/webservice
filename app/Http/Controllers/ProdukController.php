@@ -41,48 +41,18 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'namaproduk' => 'required',
-        //     'deskripsi' => 'required',
-        //     'gambar' => 'required',
-        //     'harga' => 'required',
-        // ]);
-        // $data = Produkdata::create([
-        //     'namaproduk' => $request->namaproduk,
-        //     'deskripsi' => $request->deskripsi,
-        //     'gambar' => $request->gambar,
-        //     'harga' => $request->harga,
-        // ]);
-        // return response()->json($data);
-
-        // $data = new Produkdata;
-        // $data->namaproduk = $request->namaproduk;
-        // $data->deskripsi = $request->deskripsi;
-        // $data->gambar = $request->gambar;
-        // $data->harga = $request->harga;
-        // $data->save();
-        // return;
-
-
-        $validator = Validator::make($request->all(), [
-            'namaproduk' => 'required',
-            'deskripsi' => 'required',
-            'gambar' => 'required',
-            'harga' => 'required',
+        $data = $request->validate([
+            'namaproduk' => ['required', 'string'],
+            'deskripsi' => ['required', 'string'],
+            'gambar' => ['required'],
+            'harga' => ['required', 'int'],
         ]);
-        if ($validator->fails()) {
-            return response()->json(
-                $validator->errors(),
-            );
-        }
-        try {
-            $data = Produkdata::create($request->all());
-            return response()->json($data);
-        } catch (QueryException $e) {
-            return response()->json([
-                'PESAN' => "GAGAL" . $e->errorInfo
-            ]);
-        }
+        $file = $request->file('gambar');
+        $name = 'produkdatas/' . uniqid() . '.' . $file->extension();
+        $file->storePubliclyAs('public', $name);
+        $data['gambar'] = $name;
+        $user = Produkdata::create($data);
+        return response()->json($user);
     }
     /**
      * Display the specified resource.
