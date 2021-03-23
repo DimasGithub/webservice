@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,8 @@ Route::put('produk/update/{id}', [ProdukController::class, 'update']);
 Route::delete('produk/delete/{id}', [ProdukController::class, 'destroy']);
 Route::get('/produk', [ProdukController::class, 'index']);
 Route::get('/slider', [SliderController::class, 'index']);
+Route::get('/biodata', [BiodataController::class, 'index']);
+Route::post('/biodata/add/', [BiodataController::class, 'store']);
 Route::get('/setting', function () {
     return DB::table('settings')->get();
 });
