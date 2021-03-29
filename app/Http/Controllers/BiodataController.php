@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Exception;
 use App\Http\Controllers\NotFoundException;
 use App\Biodatum;
+use Illuminate\Http\Request;
 use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Validator;
@@ -42,10 +43,10 @@ class BiodataController extends Controller
             'content' => ['required', 'string'],
             'picture' => ['required']
         ]);
-        $file = $request->file('picture');
-        $name = 'biodata/March2021/' . uniqid() . '.' . $file->extension();
-        $file->storePubliclyAs('public', $name);
-        $data['picture'] = $name;
+        // $file = $request->file('picture');
+        // $name = 'biodata/March2021/' . uniqid() . '.' . $file->extension();
+        // $file->storePubliclyAs('public', $name);
+        // $data['picture'] = $name;
         $user = Biodatum::create($data);
         return response()->json($data);
         // if ($request->hasFile('picture')) {
@@ -65,5 +66,31 @@ class BiodataController extends Controller
         //         return response()->json('Cannot upload file');
         //     }
         // }
+    }
+    public function update(Request $request, $id)
+    {
+        // $file = $request->file('gambar');
+        // $name = 'produkdatas/' . uniqid() . '.' . $file->extension();
+        // $file->storePubliclyAs('public', $name);
+        // $data = Biodatum::findOrFail($id);
+        // $data->namaproduk = $request->namaproduk;
+        // $data->deskripsi = $request->deskripsi;
+        // $data->gambar = $name;
+        // $data->harga = $request->harga;
+        // $data->save();
+        $data = Biodatum::findOrFail($id);
+        $data->name = $request->name;
+        $data->description = $request->description;
+        $data->content = $request->content;
+        $data->save();
+
+        return response()->json($data);
+    }
+    public function detail($id)
+    {
+        $dataproduk = Biodatum::findOrFail($id);
+        $response = $dataproduk;
+
+        return response()->json($response);
     }
 }

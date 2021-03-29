@@ -88,12 +88,21 @@ class ProdukController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $file = $request->file('gambar');
+        $name = 'produkdatas/' . uniqid() . '.' . $file->extension();
+        $file->storePubliclyAs('public', $name);
         $data = Produkdata::findOrFail($id);
         $data->namaproduk = $request->namaproduk;
         $data->deskripsi = $request->deskripsi;
-        $data->gambar = $request->gambar;
+        $data->gambar = $name;
         $data->harga = $request->harga;
         $data->save();
+        // $data = Produkdata::findOrFail($id);
+        // $data->namaproduk = $request->namaproduk;
+        // $data->deskripsi = $request->deskripsi;
+        // $data->gambar = $request->gambar;
+        // $data->harga = $request->harga;
+        // $data->save();
 
         return response()->json($data);
     }
